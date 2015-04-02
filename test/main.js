@@ -1,12 +1,12 @@
 var test = require('tape');
-var mixins = require('ampersand-collection-underscore-mixin');
+var mixins = require('ampersand-collection-lodash-mixin');
 var Collection = require('ampersand-collection').extend(mixins);
 var SubCollection = require('../ampersand-filtered-subcollection');
 var Model = require('ampersand-state');
-var toArray = require('amp-to-array');
-var every = require('amp-every');
-var keys = require('amp-keys');
-var pluck = require('amp-pluck');
+var toArray = require('lodash.toarray');
+var every = require('lodash.every');
+var keys = require('lodash.keys');
+var pluck = require('lodash.pluck');
 
 // our widget model
 var Widget = Model.extend({

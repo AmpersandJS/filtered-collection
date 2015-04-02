@@ -1,18 +1,18 @@
 /*$AMPERSAND_VERSION*/
-var contains = require('amp-contains');
-var difference = require('amp-difference');
-var each = require('amp-each');
-var every = require('amp-every');
-var extend = require('amp-extend');
-var isArray = require('amp-is-array');
-var isEqual = require('amp-is-object-equal');
-var keys = require('amp-keys');
-var reduce = require('amp-reduce');
-var sortBy = require('amp-sort-by');
-var sortedInsert = require('amp-sorted-insert');
-var union = require('amp-union');
+var contains = require('lodash.includes');
+var difference = require('lodash.difference');
+var each = require('lodash.foreach');
+var every = require('lodash.every');
+var extend = require('lodash.assign');
+var isArray = require('lodash.isarray');
+var isEqual = require('lodash.isequal');
+var keys = require('lodash.keys');
+var reduce = require('lodash.reduce');
+var sortBy = require('lodash.sortby');
+var sortedIndex = require('lodash.sortedindex');
+var union = require('lodash.union');
 var classExtend = require('ampersand-class-extend');
-var underscoreMixins = require('ampersand-collection-underscore-mixin');
+var lodashMixins = require('ampersand-collection-lodash-mixin');
 var Events = require('ampersand-events');
 
 var slice = Array.prototype.slice;
@@ -29,7 +29,7 @@ function FilteredCollection(collection, spec) {
     this.listenTo(this.collection, 'all', this._onCollectionEvent);
 }
 
-extend(FilteredCollection.prototype, Events, underscoreMixins, {
+extend(FilteredCollection.prototype, Events, lodashMixins, {
     // Public API
 
     // add a filter function directly
@@ -91,7 +91,7 @@ extend(FilteredCollection.prototype, Events, underscoreMixins, {
     // proxy `get` method to the underlying collection
     get: function (query, indexName) {
         var model = this.collection.get(query, indexName);
-        if (model && this.contains(model)) return model;
+        if (model && this.includes(model)) return model;
     },
 
     // clear all filters, reset everything
@@ -177,7 +177,8 @@ extend(FilteredCollection.prototype, Events, underscoreMixins, {
         //Whether or not we are to expect a sort event from our collection later
         var sortable = eventName === 'add' && this.collection.comparator && (options.at == null) && options.sort !== false;
         if (!sortable) {
-            sortedInsert(newModels, model, comparator);
+            var index = sortedIndex(newModels, model, comparator);
+            newModels.splice(index, 0, model);
         } else {
             newModels.push(model);
             if (options.at) newModels = this._sortModels(newModels);
