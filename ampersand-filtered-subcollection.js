@@ -12,7 +12,6 @@ var sortBy = require('lodash.sortby');
 var sortedIndex = require('lodash.sortedindex');
 var union = require('lodash.union');
 var classExtend = require('ampersand-class-extend');
-var lodashMixins = require('ampersand-collection-lodash-mixin');
 var Events = require('ampersand-events');
 
 var slice = Array.prototype.slice;
@@ -29,7 +28,7 @@ function FilteredCollection(collection, spec) {
     this.listenTo(this.collection, 'all', this._onCollectionEvent);
 }
 
-extend(FilteredCollection.prototype, Events, lodashMixins, {
+extend(FilteredCollection.prototype, Events, {
     // Public API
 
     // add a filter function directly
@@ -91,7 +90,7 @@ extend(FilteredCollection.prototype, Events, lodashMixins, {
     // proxy `get` method to the underlying collection
     get: function (query, indexName) {
         var model = this.collection.get(query, indexName);
-        if (model && this.includes(model)) return model;
+        if (model && contains(this.models, model)) return model;
     },
 
     // clear all filters, reset everything

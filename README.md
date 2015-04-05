@@ -113,12 +113,6 @@ The subcollection maintains a read-only length property that simply proxies to t
 
 The array of filtered models
 
-### lodash methods
-
-Since we're already depending on lodash for much of the functionality in this module, we also mixin lodash methods into the subcollection in the same way that Backbone does with underscore for collections.
-
-This means you can just call `collection.each()` or `collection.find()` to find/filter/iterate the models in the subcollection. You can see which lodash methods are included by referencing [ampersand-collection-lodash-mixin](https://github.com/AmpersandJS/ampersand-collection-lodash-mixin).
-
 ### FilteredSubcollection.extend(mixins...)
 
 FilteredSubcollection attaches `extend` to the constructor so if you want to add custom methods to your subcollection constructor, it's easy:
