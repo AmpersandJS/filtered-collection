@@ -1,16 +1,17 @@
 /*$AMPERSAND_VERSION*/
-var includes = require('lodash.includes');
-var difference = require('lodash.difference');
-var forEach = require('lodash.foreach');
-var every = require('lodash.every');
-var assign = require('lodash.assign');
-var isArray = require('lodash.isarray');
-var isEqual = require('lodash.isequal');
-var keys = require('lodash.keys');
-var reduce = require('lodash.reduce');
-var sortBy = require('lodash.sortby');
-var sortedIndex = require('lodash.sortedindex');
-var union = require('lodash.union');
+var includes = require('lodash/includes');
+var difference = require('lodash/difference');
+var forEach = require('lodash/foreach');
+var every = require('lodash/every');
+var assign = require('lodash/assign');
+var isArray = require('lodash/isarray');
+var isEqual = require('lodash/isequal');
+var keys = require('lodash/keys');
+var reduce = require('lodash/reduce');
+var sortBy = require('lodash/sortBy');
+var sortedIndex = require('lodash/sortedindex');
+var union = require('lodash/union');
+var bind = require('lodash/bind');
 var classExtend = require('ampersand-class-extend');
 var Events = require('ampersand-events');
 
@@ -112,11 +113,11 @@ assign(FilteredCollection.prototype, Events, {
         //this.comparator = this.collection.comparator;
         if (spec.comparator) this.comparator = spec.comparator;
         if (spec.where) {
-            forEach(spec.where, function (value, item) {
+            forEach(spec.where, bind(function (value, item) {
                 this._addFilter(function (model) {
                     return (model.get ? model.get(item) : model[item]) === value;
                 });
-            }, this);
+            }, this));
             // also make sure we watch all `where` keys
             this._watch(keys(spec.where));
         }
@@ -124,7 +125,7 @@ assign(FilteredCollection.prototype, Events, {
             this._addFilter(spec.filter);
         }
         if (spec.filters) {
-            spec.filters.forEach(this._addFilter, this);
+            spec.filters.forEach(bind(this._addFilter, this));
         }
     },
     // internal method registering new filter function
@@ -262,9 +263,9 @@ assign(FilteredCollection.prototype, Events, {
         // sort it
         if (this.comparator) newModels = this._sortModels(newModels, this.comparator);
 
-        newModels.forEach(function (model) {
+        newModels.forEach(bind(function (model) {
             this._addIndex(newIndexes, model);
-        }, this);
+        }, this));
 
         // Cache a reference to the full filtered set to allow this._filtered.length. Ref: #6
         if (rootModels.length) {
@@ -282,13 +283,13 @@ assign(FilteredCollection.prototype, Events, {
         // save 'em
         this.models = newModels;
 
-        forEach(toRemove, function (model) {
+        forEach(toRemove, bind(function (model) {
             this.trigger('remove', model, this);
-        }, this);
+        }, this));
 
-        forEach(toAdd, function (model) {
+        forEach(toAdd, bind(function (model) {
             this.trigger('add', model, this);
-        }, this);
+        }, this));
 
         // unless we have the same models in same order trigger `sort`
         if (!isEqual(existingModels, newModels) && this.comparator) {

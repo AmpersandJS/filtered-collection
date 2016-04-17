@@ -2,11 +2,11 @@ var test = require('tape');
 var Collection = require('ampersand-collection');
 var SubCollection = require('../ampersand-filtered-subcollection');
 var Model = require('ampersand-state');
-var every = require('lodash.every');
-var find = require('lodash.find');
-var keys = require('lodash.keys');
-var pluck = require('lodash.pluck');
-var toArray = require('lodash.toarray');
+var every = require('lodash/every');
+var find = require('lodash/find');
+var keys = require('lodash/keys');
+var pluck = require('lodash/pluck');
+var toArray = require('lodash/toarray');
 
 // our widget model
 var Widget = Model.extend({
