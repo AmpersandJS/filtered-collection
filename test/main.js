@@ -6,7 +6,7 @@ var every = require('lodash/every');
 var find = require('lodash/find');
 var keys = require('lodash/keys');
 var map = require('lodash/map');
-var toArray = require('lodash/toarray');
+var toArray = require('lodash/toArray');
 
 // our widget model
 var Widget = Model.extend({
