@@ -9,7 +9,7 @@ var isEqual = require('lodash/isEqual');
 var keys = require('lodash/keys');
 var reduce = require('lodash/reduce');
 var sortBy = require('lodash/sortBy');
-var sortedIndex = require('lodash/sortedIndex');
+var sortedIndexBy = require('lodash/sortedIndexBy');
 var union = require('lodash/union');
 var bind = require('lodash/bind');
 var classExtend = require('ampersand-class-extend');
@@ -181,7 +181,7 @@ assign(FilteredCollection.prototype, Events, {
         //Whether or not we are to expect a sort event from our collection later
         var sortable = eventName === 'add' && this.collection.comparator && (options.at == null) && options.sort !== false;
         if (!sortable) {
-            var index = sortedIndex(newModels, model, comparator);
+            var index = sortedIndexBy(newModels, model, comparator);
             newModels.splice(index, 0, model);
         } else {
             newModels.push(model);
