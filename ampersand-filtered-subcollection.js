@@ -165,7 +165,7 @@ assign(FilteredCollection.prototype, Events, {
                 newModels = sortBy(newModels, comparator);
             } else {
                 // lodash sortBy does not allow for traditional a, b comparisons
-                newModels = newModels.sort(comparator);
+                newModels = newModels.sort.call(this.collection, comparator);
             }
         } else {
             // This only happens when parent got a .set with options.at defined
