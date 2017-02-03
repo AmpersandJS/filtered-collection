@@ -333,7 +333,9 @@ assign(FilteredCollection.prototype, Events, {
 
         // action has now passed the filters
 
-        if (action === 'reset') return this._runFilters();
+        if (action === 'reset' || action === 'sync') {
+            return this._runFilters();
+        }
 
         if (action === 'add') {
             if (this.models.length === 0) {
