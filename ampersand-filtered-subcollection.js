@@ -412,7 +412,7 @@ var collectionMethods = [
 
 collectionMethods.forEach(function (method) {
     FilteredCollection.prototype[method] = function () {
-        return this.collection[method].apply(this, arguments);
+        return this.collection[method].apply(this.collection, arguments);
     };
 });
 
